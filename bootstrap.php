@@ -1,13 +1,13 @@
 <?php
 /**
- * Starter Plugin
+ * Extend WooCommerce
  *
  * @package     spiralWebDb\StarterPlugin
  * @author      Robert A Gadon
  * @license     GPL-2.0+
  *
  * @wordpress-plugin
- * Plugin Name:     Starter Plugin
+ * Plugin Name:     Extend WooCommerce
  * Plugin URI:      https://github.com/spiralWebDb/starter-plugin
  * Description:     A WordPress plugin boilerplate that emphasizes code quality and provides you a quick start to your custom plugin development project.
  * Version:         1.0.0
@@ -15,12 +15,12 @@
  * Requires PHP:    5.6
  * Author:          Robert A Gadon
  * Author URI:      https://spiralWebDb.com
- * Text Domain:     starter-plugin
+ * Text Domain:     extend-woocommerce
  * License:         GPL-2.0+
  * License URI:     http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-namespace spiralWebDb\StarterPlugin;
+namespace spiralWebDb\extendWooCommerce;
 
 /**
  * Gets this plugin's absolute directory path.
@@ -49,6 +49,17 @@ function register_plugin() {
 	register_activation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
 	register_deactivation_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
 	register_uninstall_hook( __FILE__, __NAMESPACE__ . '\delete_rewrite_rules' );
+}
+
+/**
+ * Delete the rewrite rules on plugin status change, i.e. activation, deactivation, or uninstall.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function delete_rewrite_rules() {
+	delete_option( 'rewrite_rules' );
 }
 
 /**
@@ -92,7 +103,7 @@ function _is_in_development_mode() {
  */
 function autoload_files() {
 	$files = [
-		// add the list of files to load here.
+		'asset/load-assets.php',
 	];
 
 	foreach ( $files as $file ) {
